@@ -271,6 +271,37 @@ h1{
 
 .fine{font-size:.92rem;color:var(--muted)}
 .muted{color:var(--muted)}
+.sep{opacity:.5; margin:0 8px}
+
+/* =========================
+   BUY BUTTONS (Book page)
+========================= */
+.buy-buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin: 12px 0 8px;
+}
+.buy-buttons .btn{
+  flex: 1 1 auto;
+  min-width: 170px;
+}
+@media (max-width:420px){
+  .buy-buttons .btn{
+    min-width:0;
+    width:100%;
+  }
+}
+
+/* =========================
+   LISTS / BULLETS
+========================= */
+.bullets{
+  margin:0;
+  padding-left:18px;
+  color:var(--muted);
+}
+.bullets li{margin:6px 0}
 
 /* =========================
    COVER
@@ -288,6 +319,14 @@ h1{
   width:100%;
   aspect-ratio:2/3;
   object-fit:cover;
+}
+
+/* Book page cover: show full image, never cropped */
+.cover.cover--contain img{
+  aspect-ratio:auto;
+  object-fit:contain;
+  max-height:520px;
+  background:rgba(0,0,0,.18);
 }
 
 .cover-caption{
@@ -328,6 +367,14 @@ h1{
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.10);
   box-shadow:var(--shadowSoft);
+}
+
+/* Full-width cards on specific pages */
+body[data-page="book"] .book-grid .book-card.cover-card{
+  grid-column: 1 / -1;
+}
+body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
+  grid-column: 1 / -1;
 }
 
 h3{margin:0 0 10px}
@@ -450,6 +497,7 @@ p{margin:0 0 12px}
   .social-links{
     width:100%;
     justify-content:flex-start;
+    flex-wrap:wrap;
   }
 
   /* === Mobile spacing refinement (fixes the “gappy” feel) === */
