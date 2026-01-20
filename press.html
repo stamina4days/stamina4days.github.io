@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Press — Prince Hubbard</title>
+  <meta name="description" content="Press resources, press kit download, and reviewer/bookstore inquiries for Bound to Witness." />
+
+  <link rel="canonical" href="https://stamina4days.github.io/press.html" />
+  <meta name="robots" content="index,follow" />
+  <meta name="author" content="Prince Hubbard" />
+
+  <meta property="og:title" content="Press — Prince Hubbard" />
+  <meta property="og:description" content="Press kit, review requests, and bookstore/library info." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://stamina4days.github.io/assets/og.jpg" />
+  <meta property="og:url" content="https://stamina4days.github.io/press.html" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Press — Prince Hubbard" />
+  <meta name="twitter:description" content="Press kit, review requests, and bookstore/library info." />
+  <meta name="twitter:image" content="https://stamina4days.github.io/assets/og.jpg" />
+
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#111111" />
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Shared nav include (active = press) -->
+<div id="siteNav" data-active="press"></div>
+
+<main id="main">
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>Press</h2>
+        <p class="sub">For reviewers, bookstores, librarians, and inquiries.</p>
+      </div>
+
+      <div class="book-grid">
+        <div class="book-card">
+          <h3>Press kit</h3>
+          <p class="muted">Download the press kit for book details, author bio, ISBN, and cover art.</p>
+          <a class="btn primary" href="assets/press-kit.pdf" target="_blank" rel="noopener">Download press kit (PDF)</a>
+          <p class="fine muted">Make sure <code>assets/press-kit.pdf</code> exists in your repo.</p>
+        </div>
+
+        <div class="book-card">
+          <h3>One-line pitch</h3>
+          <blockquote>
+            A quiet, escalating record of what happens when observation stops being neutral—and becomes a force.
+          </blockquote>
+          <button class="btn" type="button" id="copyPitch">Copy pitch</button>
+          <p class="fine muted" id="copyStatus" aria-live="polite"></p>
+        </div>
+
+        <div class="book-card">
+          <h3>Bookstores &amp; libraries</h3>
+          <p class="muted">Orders can be placed using the paperback ISBN. Reach out for details.</p>
+          <p class="fine muted">ISBN: <strong>9798295563003</strong></p>
+        </div>
+
+        <div class="book-card">
+          <h3>Rights</h3>
+          <p class="muted">Adaptation rights available.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        © <span id="year"></span> Prince Hubbard
+        <span class="sep">•</span>
+        <span class="fine muted">Adaptation rights available.</span>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<script src="script.js" defer></script>
+</body>
+</html>

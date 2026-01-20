@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Contact — Prince Hubbard</title>
+  <meta name="description" content="Contact Prince Hubbard for review requests, bookstore inquiries, and general questions." />
+
+  <link rel="canonical" href="https://stamina4days.github.io/contact.html" />
+  <meta name="robots" content="index,follow" />
+  <meta name="author" content="Prince Hubbard" />
+
+  <meta property="og:title" content="Contact — Prince Hubbard" />
+  <meta property="og:description" content="Review requests, bookstores, and general inquiries." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://stamina4days.github.io/assets/og.jpg" />
+  <meta property="og:url" content="https://stamina4days.github.io/contact.html" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact — Prince Hubbard" />
+  <meta name="twitter:description" content="Review requests, bookstores, and general inquiries." />
+  <meta name="twitter:image" content="https://stamina4days.github.io/assets/og.jpg" />
+
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#111111" />
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Shared nav include (active = contact) -->
+<div id="siteNav" data-active="contact"></div>
+
+<main id="main">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <p class="sub">Review requests, bookstores, and general inquiries.</p>
+      </div>
+
+      <form class="form" action="https://formspree.io/f/xkoojzbr" method="POST">
+        <input type="hidden" name="form_type" value="contact_message" />
+
+        <label>
+          Name
+          <input name="name" autocomplete="name" required />
+        </label>
+
+        <label>
+          Email
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+
+        <label>
+          Message
+          <textarea name="message" rows="6" required></textarea>
+        </label>
+
+        <button class="btn primary" type="submit">Send message</button>
+        <p class="fine muted">Used only to reply. Not added to the mailing list.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        © <span id="year"></span> Prince Hubbard
+        <span class="sep">•</span>
+        <span class="fine muted">Adaptation rights available.</span>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<script src="script.js" defer></script>
+</body>
+</html>

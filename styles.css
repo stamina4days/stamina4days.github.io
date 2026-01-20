@@ -1,0 +1,514 @@
+:root{
+  --bg:#0b0c10;
+  --panel:#11131a;
+  --panel2:#0f1117;
+  --text:#e9ecf4;
+  --muted:#aeb6cc;
+  --line:rgba(255,255,255,.10);
+  --accent:#7aa2ff;
+  --accent2:#9bffd4;
+  --shadow: 0 10px 30px rgba(0,0,0,.45);
+  --shadowSoft: 0 8px 24px rgba(0,0,0,.24);
+  --radius: 18px;
+  --max: 1120px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(122,162,255,.18), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(155,255,212,.10), transparent 55%),
+    linear-gradient(180deg, #08090c, #0b0c10 40%, #07080b);
+  color:var(--text);
+  line-height:1.55;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a{color:inherit; text-decoration:none}
+a:hover{opacity:.92}
+
+/* Global image safety (prevents "giant image" surprises) */
+img{max-width:100%; height:auto; display:block}
+
+/* Screen reader only */
+.sr-only{
+  position:absolute !important;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+/* Inline code */
+code{
+  background: rgba(255,255,255,.06);
+  padding:.1rem .35rem;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* Focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 4px rgba(122,162,255,.14);
+  border-color:rgba(122,162,255,.55);
+}
+
+.skip{
+  position:absolute;left:-9999px;
+}
+.skip:focus{
+  left:12px;top:12px;
+  padding:10px 12px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  z-index:9999;
+}
+
+.container{
+  width:min(var(--max), calc(100% - 40px));
+  margin:0 auto;
+}
+
+/* =========================
+   Shared nav include mount
+========================= */
+#siteNav{
+  min-height:64px; /* prevents layout jump while nav loads */
+}
+
+/* Nav fade-in (works with script adding .nav-ready) */
+#siteNav .site-header{
+  opacity:0;
+  transform: translateY(-3px);
+  transition: opacity .22s ease, transform .22s ease;
+}
+#siteNav.nav-ready .site-header{
+  opacity:1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce){
+  #siteNav .site-header,
+  #siteNav.nav-ready .site-header{
+    transition:none;
+    transform:none;
+    opacity:1;
+  }
+}
+
+/* =========================
+   Header / Nav
+========================= */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter:blur(10px);
+  background:rgba(11,12,16,.55);
+  border-bottom:1px solid var(--line);
+}
+
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:14px 0;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+}
+.brand-mark{
+  width:34px;height:34px;
+  display:grid;place-items:center;
+  border-radius:12px;
+  background:linear-gradient(135deg, rgba(122,162,255,.22), rgba(155,255,212,.14));
+  border:1px solid rgba(255,255,255,.14);
+}
+.brand-text{opacity:.95}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  position:relative;
+}
+
+.nav-menu{
+  display:flex;
+  gap:16px;
+}
+.nav-menu a{
+  padding:8px 10px;
+  border-radius:12px;
+  color:var(--muted);
+  border:1px solid transparent; /* no layout shift when active border appears */
+}
+.nav-menu a:hover{
+  color:var(--text);
+  background:rgba(255,255,255,.06);
+}
+
+/* Active nav state (driven by #siteNav data-active + links with data-nav) */
+#siteNav[data-active="home"]    .nav-menu a[data-nav="home"],
+#siteNav[data-active="book"]    .nav-menu a[data-nav="book"],
+#siteNav[data-active="ashes"]   .nav-menu a[data-nav="ashes"],
+#siteNav[data-active="about"]   .nav-menu a[data-nav="about"],
+#siteNav[data-active="press"]   .nav-menu a[data-nav="press"],
+#siteNav[data-active="contact"] .nav-menu a[data-nav="contact"]{
+  color:var(--text);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+/* Optional cue for external link (Print Shop) */
+#siteNav .nav-menu a[data-nav="print"]{ position:relative; }
+#siteNav .nav-menu a[data-nav="print"]::after{
+  content:"↗";
+  display:inline-block;
+  margin-left:.35rem;
+  font-size:.85em;
+  line-height:1;
+  opacity:.55;
+  transform: translateY(-1px);
+}
+#siteNav .nav-menu a[data-nav="print"]:hover::after{ opacity:.85; }
+
+.nav-toggle{
+  display:none;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  color:var(--text);
+  padding:9px 12px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* =========================
+   Hero (Home only)
+========================= */
+.hero{padding:56px 0 18px}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap:28px;
+  align-items:center;
+}
+
+.kicker{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:.78rem;
+  margin:0 0 10px;
+}
+
+h1{
+  font-size:clamp(2.2rem,4vw,3.3rem);
+  margin:0 0 10px;
+  line-height:1.12;
+}
+
+.lede{
+  opacity:.92;
+  font-size:1.06rem;
+  max-width:60ch;
+  margin:0 0 18px;
+}
+
+.hero-cta{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  cursor:pointer;
+  transition:transform .12s, box-shadow .12s, background .12s;
+}
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:var(--shadow);
+}
+.btn.primary{
+  background:linear-gradient(135deg, rgba(122,162,255,.35), rgba(155,255,212,.22));
+}
+
+/* Meta chips */
+.hero-meta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.meta-chip{
+  display:flex;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+  color:var(--muted);
+  font-size:.9rem;
+}
+.dot{
+  width:8px;height:8px;
+  border-radius:999px;
+  background:var(--accent2);
+}
+.dot.ghost{background:var(--accent)}
+
+/* Mailing list panel */
+.hero-signup{
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+/* =========================
+   Covers / Images
+========================= */
+.cover{
+  margin:0;
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
+}
+
+/* Default cover behavior (Home hero): cinematic crop */
+.cover img{
+  width:100%;
+  aspect-ratio:2/3;
+  object-fit:cover;
+}
+
+/* Caption */
+.cover-caption{
+  padding:12px 14px;
+  border-top:1px solid rgba(255,255,255,.08);
+  background:rgba(0,0,0,.12);
+}
+.cover-caption .title{display:block; font-weight:700}
+.cover-caption .subtitle{display:block; color:var(--muted); font-size:.92rem}
+
+/* Ashes teaser (document-style) */
+.teaser-figure{
+  margin:0;
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
+}
+.teaser-figure img{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  background:rgba(0,0,0,.18);
+}
+
+/* Book page cover: show full image, not huge, never cropped */
+.cover.cover--contain img{
+  aspect-ratio:auto;
+  object-fit:contain;
+  max-height:520px;     /* desktop/tablet cap */
+  background:rgba(0,0,0,.18);
+}
+
+/* =========================
+   Sections / Cards
+========================= */
+.section{padding:54px 0}
+.section.alt{
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.section-head{margin-bottom:18px}
+.section-head h2{
+  font-size:clamp(1.5rem,2.3vw,2rem);
+  margin:0 0 8px;
+}
+.sub{color:var(--muted); margin:0; max-width:70ch}
+
+.book-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.book-card{
+  padding:18px;
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadowSoft);
+}
+
+/* ===== Ashes page only — teaser card spans full width ===== */
+body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
+  grid-column: 1 / -1;
+}
+
+/* ===== Book page only — cover card spans full width ===== */
+body[data-page="book"] .book-grid .book-card.cover-card{
+  grid-column: 1 / -1;
+}
+
+h3{margin:0 0 10px}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.fine{font-size:.92rem;color:var(--muted)}
+.sep{opacity:.5; margin: 0 8px}
+
+.bullets{
+  margin:0;
+  padding-left:18px;
+  color:var(--muted);
+}
+.bullets li{margin:6px 0}
+
+.buy-buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin: 12px 0 8px;
+}
+
+blockquote{
+  margin:0;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.20);
+}
+
+/* =========================
+   FORMS (Fixes the "mashed" contact)
+========================= */
+.form{
+  display:grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.form label{
+  display:grid;
+  gap: 6px;
+  width: 100%;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+.form input,
+.form textarea{
+  display:block;
+  width:100%;
+  max-width:100%;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.22);
+  color:var(--text);
+  outline:none;
+}
+
+.form textarea{resize: vertical}
+
+.form input:focus,
+.form textarea:focus{
+  border-color: rgba(122,162,255,.55);
+  box-shadow: 0 0 0 4px rgba(122,162,255,.12);
+}
+
+/* =========================
+   Footer
+========================= */
+.site-footer{
+  padding:24px 0 34px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.footer-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width:1024px){
+  .hero-grid{
+    grid-template-columns: 1fr .95fr;
+    gap:22px;
+    align-items:start;
+  }
+  .hero-art{max-width:520px; margin-left:auto;}
+  .cover img{max-height:56vh;}
+}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .book-grid{grid-template-columns:1fr}
+
+  .hero-art{max-width:520px; margin:0 auto;}
+  .cover img{max-height:52vh;}
+  .teaser-figure img{max-height:52vh;}
+
+  /* Book page cover: smaller on phones */
+  .cover.cover--contain img{ max-height:46vh; }
+}
+
+@media (max-width:720px){
+  .nav-toggle{display:inline-flex}
+  .nav-menu{
+    display:none;
+    position:absolute;
+    right:20px;
+    top:60px;
+    flex-direction:column;
+    background:rgba(11,12,16,.92);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:16px;
+    padding:10px;
+    min-width:220px;
+  }
+  .nav-menu a{padding:10px 12px}
+  .nav-menu.open{display:flex}
+
+  /* keep Print Shop cue clean in dropdown */
+  #siteNav .nav-menu a[data-nav="print"]::after{content:""; margin-left:0;}
+
+  .cover img{max-height:48vh;}
+  .teaser-figure img{max-height:48vh;}
+  .cover.cover--contain img{ max-height:42vh; }
+}
