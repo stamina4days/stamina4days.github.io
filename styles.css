@@ -244,7 +244,7 @@ h1{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
-  margin-bottom:16px;
+  margin-bottom:12px;
 }
 
 .btn{
@@ -272,6 +272,52 @@ h1{
 .fine{font-size:.92rem;color:var(--muted)}
 .muted{color:var(--muted)}
 .sep{opacity:.5; margin:0 8px}
+
+.subtle-note{
+  margin:6px 0 0;
+}
+
+/* Meta chips (you had HTML for these but no CSS) */
+.hero-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:14px 0 4px;
+}
+.meta-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+}
+.meta-chip span:last-child{ color:var(--text); opacity:.92; }
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:rgba(155,255,212,.85);
+  box-shadow:0 0 0 3px rgba(155,255,212,.12);
+}
+.dot.ghost{
+  background:rgba(122,162,255,.78);
+  box-shadow:0 0 0 3px rgba(122,162,255,.12);
+}
+
+/* MailerLite embedded form container */
+.hero-signup{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.08);
+  max-width:62ch;
+}
+.hero-signup .ml-embedded{
+  margin:10px 0;
+}
 
 /* =========================
    BUY BUTTONS (Book page)
@@ -379,6 +425,50 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
 
 h3{margin:0 0 10px}
 p{margin:0 0 12px}
+
+/* =========================
+   ARCHIVE / ACCESS
+========================= */
+.archive{
+  margin-top:42px;
+  padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.08);
+  max-width:72ch;
+}
+
+.archive h2{
+  letter-spacing:0.10em;
+  text-transform:uppercase;
+  font-size:.92rem;
+  margin:0 0 10px;
+}
+
+.archive-line{
+  margin:0 0 14px;
+  color:var(--muted);
+}
+
+.archive-links{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.archive-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);
+  max-width:max-content;
+}
+.archive-link:hover{
+  opacity:1;
+  box-shadow:var(--shadowSoft);
+  transform:translateY(-1px);
+}
 
 /* =========================
    FOOTER
@@ -500,7 +590,7 @@ p{margin:0 0 12px}
     flex-wrap:wrap;
   }
 
-  /* === Mobile spacing refinement (fixes the “gappy” feel) === */
+  /* Mobile spacing refinement */
   .section{ padding:40px 0; }
   .book-card{ padding:14px; }
   .section-head{ margin-bottom:12px; }
