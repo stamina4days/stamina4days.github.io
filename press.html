@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <title>Press — Prince Hubbard</title>
-  <meta name="description" content="Press resources, press kit download, and reviewer/bookstore inquiries for Bound to Witness." />
+  <meta name="description" content="Press resources, press kit download, and bookstore and library inquiries for Bound to Witness." />
 
   <link rel="canonical" href="https://stamina4days.github.io/press.html" />
   <meta name="robots" content="index,follow" />
   <meta name="author" content="Prince Hubbard" />
 
   <meta property="og:title" content="Press — Prince Hubbard" />
-  <meta property="og:description" content="Press kit, review requests, and bookstore/library info." />
+  <meta property="og:description" content="Press kit, review requests, and bookstore and library info." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://stamina4days.github.io/assets/og.jpg" />
   <meta property="og:url" content="https://stamina4days.github.io/press.html" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Press — Prince Hubbard" />
-  <meta name="twitter:description" content="Press kit, review requests, and bookstore/library info." />
+  <meta name="twitter:description" content="Press kit, review requests, and bookstore and library info." />
   <meta name="twitter:image" content="https://stamina4days.github.io/assets/og.jpg" />
 
   <link rel="icon" href="assets/favicon.png" />
@@ -27,7 +27,7 @@
   <meta name="theme-color" content="#111111" />
 </head>
 
-<body>
+<body data-page="press">
 <a class="skip" href="#main">Skip to content</a>
 
 <!-- Shared nav include (active = press) -->
@@ -42,32 +42,79 @@
       </div>
 
       <div class="book-grid">
+
         <div class="book-card">
           <h3>Press kit</h3>
-          <p class="muted">Download the press kit for book details, author bio, ISBN, and cover art.</p>
-          <a class="btn primary" href="assets/press-kit.pdf" target="_blank" rel="noopener">Download press kit (PDF)</a>
-          <p class="fine muted">Make sure <code>assets/press-kit.pdf</code> exists in your repo.</p>
+          <p class="muted">One page, book only. Includes pitch, selling points, ISBNs, distribution, and contact.</p>
+
+          <div class="buy-buttons">
+            <a class="btn primary"
+               href="/assets/press-kit.pdf?v=2"
+               target="_blank"
+               rel="noopener">
+              Download press kit (PDF)
+            </a>
+
+            <a class="btn"
+               href="/assets/press-kit.pdf?v=2"
+               download
+               rel="noopener">
+              Direct download
+            </a>
+          </div>
+
+          <p class="fine muted">If it does not open on mobile, refresh once. The link is cache-busted.</p>
         </div>
 
         <div class="book-card">
           <h3>One-line pitch</h3>
           <blockquote>
-            A quiet, escalating record of what happens when observation stops being neutral—and becomes a force.
+            A quiet, escalating record of what happens when observation stops being neutral and becomes a force.
           </blockquote>
           <button class="btn" type="button" id="copyPitch">Copy pitch</button>
           <p class="fine muted" id="copyStatus" aria-live="polite"></p>
         </div>
 
         <div class="book-card">
-          <h3>Bookstores &amp; libraries</h3>
-          <p class="muted">Orders can be placed using the paperback ISBN. Reach out for details.</p>
-          <p class="fine muted">ISBN: <strong>9798295563003</strong></p>
+          <h3>Book details</h3>
+          <p class="muted"><strong>Bound to Witness</strong> by Prince Hubbard</p>
+          <ul class="bullets">
+            <li>Genre: Literary speculative fiction</li>
+            <li>Formats: Paperback, eBook</li>
+            <li>Structured as archival records</li>
+            <li>Quiet tension rather than spectacle</li>
+          </ul>
+        </div>
+
+        <div class="book-card">
+          <h3>ISBNs</h3>
+          <p class="fine muted">Use the ISBN that matches the ordering system you are working with.</p>
+          <ul class="bullets">
+            <li>Draft2Digital ISBN: <strong>9798233610332</strong></li>
+            <li>Barnes &amp; Noble ISBN: <strong>9798279626557</strong></li>
+            <li>IngramSpark ISBN: <strong>979-8-2955-6300-3</strong></li>
+          </ul>
+        </div>
+
+        <div class="book-card">
+          <h3>Distribution</h3>
+          <p class="muted">
+            Bookstores and libraries can order via Ingram distribution (IngramSpark). The title is also available through Barnes &amp; Noble, Amazon, and Draft2Digital partner channels.
+          </p>
+        </div>
+
+        <div class="book-card">
+          <h3>Contact</h3>
+          <p class="muted">For review copies, events, interviews, or bookstore inquiries:</p>
+          <a class="btn" href="/contact.html">Contact form</a>
+          <p class="fine muted">Website: <strong>stamina4days.github.io</strong></p>
         </div>
 
         <div class="book-card">
           <h3>Rights</h3>
           <p class="muted">Adaptation rights available.</p>
         </div>
+
       </div>
     </div>
   </section>
