@@ -23,13 +23,58 @@ html,body{height:100%}
 html{ overflow-x:hidden; }
 body{ overflow-x:hidden; }
 
+/* =========================
+   ARTISTIC ARCHIVAL BACKGROUND + SCROLL FADE
+   - paper grain
+   - document banding
+   - ink bloom
+   - subtle "attention fades" overlay on scroll
+========================= */
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+  /* Archival, document-like background (no images, all CSS) */
   background:
-    radial-gradient(1200px 600px at 20% 10%, rgba(122,162,255,.18), transparent 60%),
-    radial-gradient(900px 500px at 80% 20%, rgba(155,255,212,.10), transparent 55%),
-    linear-gradient(180deg, #08090c, #0b0c10 40%, #07080b);
+    /* Paper grain */
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.015) 0px,
+      rgba(255,255,255,0.015) 1px,
+      transparent 1px,
+      transparent 6px
+    ),
+
+    /* Vertical document banding */
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.04) 0%,
+      rgba(255,255,255,0.02) 12%,
+      rgba(255,255,255,0.00) 40%
+    ),
+
+    /* Ink bloom / attention focus */
+    radial-gradient(
+      900px 420px at 18% 8%,
+      rgba(155,255,212,0.08),
+      transparent 60%
+    ),
+
+    /* Secondary cold presence */
+    radial-gradient(
+      1100px 520px at 82% 18%,
+      rgba(122,162,255,0.06),
+      transparent 65%
+    ),
+
+    /* Base graphite */
+    linear-gradient(
+      180deg,
+      #0a0b10 0%,
+      #0b0c12 45%,
+      #090a0f 100%
+    );
+
   color:var(--text);
   line-height:1.55;
   text-rendering: optimizeLegibility;
@@ -37,6 +82,44 @@ body{
 
   /* Prevents sticky socials bar from covering content */
   padding-bottom: calc(var(--socialbar-h) + 20px);
+
+  /* Needed for the overlay */
+  position:relative;
+}
+
+/* Scroll-fade overlay: subtly darkens as you move down the page */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+
+  /* This is the "fade": top is clearer, bottom is heavier */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.00) 0%,
+      rgba(0,0,0,0.06) 22%,
+      rgba(0,0,0,0.14) 55%,
+      rgba(0,0,0,0.22) 100%
+    );
+
+  /* Make it feel like it breathes with scroll without being "animated" */
+  opacity:0.85;
+}
+
+/* Ensure your content sits above the overlay */
+#siteNav,
+main,
+.site-socialbar{
+  position:relative;
+  z-index:1;
+}
+
+/* Respect reduced motion / sensitivity */
+@media (prefers-reduced-motion: reduce){
+  body::before{ display:none; }
 }
 
 a{color:inherit;text-decoration:none}
