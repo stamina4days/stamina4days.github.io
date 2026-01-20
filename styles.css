@@ -105,7 +105,6 @@ body::before{
       rgba(0,0,0,0.22) 100%
     );
 
-  /* Make it feel like it breathes with scroll without being "animated" */
   opacity:0.85;
 }
 
@@ -170,7 +169,6 @@ h3{margin:0 0 10px}
 
 /* =========================
    ARCHIVE STAMP SYSTEM
-   Reusable “institutional” stamp styles
 ========================= */
 .stamp{
   display:inline-flex;
@@ -196,7 +194,7 @@ h3{margin:0 0 10px}
   box-shadow:0 0 0 3px rgba(255,255,255,.06);
 }
 
-/* Variants (subtle, still on-brand) */
+/* Variants */
 .stamp--approved{
   border-style:solid;
   border-color: rgba(155,255,212,.18);
@@ -225,7 +223,6 @@ h3{margin:0 0 10px}
   box-shadow:0 0 0 3px rgba(255,255,255,.07);
 }
 
-/* Optional row helper for stamps */
 .archive-stamp-row{
   display:flex;
   flex-wrap:wrap;
@@ -237,10 +234,10 @@ h3{margin:0 0 10px}
    Shared nav include mount
 ========================= */
 #siteNav{
-  min-height:64px; /* prevents layout jump while nav loads */
+  min-height:64px;
 }
 
-/* Nav fade-in (works with script adding .nav-ready) */
+/* Nav fade-in */
 #siteNav .site-header{
   opacity:0;
   transform: translateY(-3px);
@@ -341,7 +338,7 @@ h3{margin:0 0 10px}
 }
 
 .nav-menu a{
-  padding:9px 10px; /* slightly bigger tap target */
+  padding:9px 10px;
   border-radius:12px;
   color:var(--muted);
   border:1px solid transparent;
@@ -352,7 +349,6 @@ h3{margin:0 0 10px}
   background:rgba(255,255,255,.06);
 }
 
-/* Active nav state (driven by #siteNav data-active + links with data-nav) */
 #siteNav[data-active="home"]    .nav-menu a[data-nav="home"],
 #siteNav[data-active="book"]    .nav-menu a[data-nav="book"],
 #siteNav[data-active="ashes"]   .nav-menu a[data-nav="ashes"],
@@ -514,7 +510,7 @@ h1{
   }
 }
 
-/* ISBN block (clean + readable on mobile) */
+/* ISBN block */
 .isbn-block{
   line-height:1.7;
   font-size:.92rem;
@@ -552,7 +548,6 @@ h1{
   object-fit:cover;
 }
 
-/* Book page cover: show full image, never cropped */
 .cover.cover--contain img{
   aspect-ratio:auto;
   object-fit:contain;
@@ -600,7 +595,6 @@ h1{
   box-shadow:var(--shadowSoft);
 }
 
-/* Full-width cards on specific pages */
 body[data-page="book"] .book-grid .book-card.cover-card{
   grid-column: 1 / -1;
 }
@@ -625,7 +619,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   margin:0 0 10px;
 }
 
-/* Optional: lets you pair ARCHIVE with a stamp cleanly */
 .archive-head{
   display:flex;
   align-items:baseline;
@@ -663,7 +656,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   position:relative;
 }
 
-/* Optional “FILE” tag for that dossier feel */
 .archive-link::before{
   content:"FILE";
   font-size:.70rem;
@@ -680,6 +672,66 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   opacity:1;
   box-shadow:var(--shadowSoft);
   transform:translateY(-1px);
+}
+
+/* =========================
+   ARCHIVE VIDEO (NEW)
+   Matches the same “archive card” feel, but quieter.
+========================= */
+.site-video{
+  margin:14px 0 14px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  box-shadow:var(--shadowSoft);
+}
+
+/* The video itself */
+.site-video video{
+  width:100%;
+  height:auto;
+  display:block;
+
+  /* Archival processing look */
+  filter:
+    saturate(0.78)
+    contrast(1.08)
+    brightness(0.92)
+    blur(0.15px);
+  opacity:0.92;
+}
+
+/* Add a subtle “scanline” / film overlay without images */
+.site-video{
+  position:relative;
+}
+.site-video::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.028) 0px,
+      rgba(255,255,255,0.028) 1px,
+      rgba(0,0,0,0.00) 3px,
+      rgba(0,0,0,0.00) 6px
+    );
+  mix-blend-mode:overlay;
+  opacity:0.20;
+}
+
+/* Caption reads like a label */
+.video-caption{
+  padding:10px 12px;
+  border-top:1px solid rgba(255,255,255,.08);
+  background:rgba(0,0,0,.18);
+  color:rgba(233,236,244,.78);
+  font-size:.78rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
 }
 
 /* =========================
@@ -758,7 +810,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   font-size:.9em;
 }
 
-/* Small screens: hide handles so both always fit */
 @media (max-width:420px){
   .social-pill .handle{display:none;}
 }
@@ -774,7 +825,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
 @media (max-width:720px){
   :root{ --socialbar-h: 86px; }
 
-  /* Mobile nav dropdown */
   .nav-toggle{display:inline-flex}
   .nav-menu{
     display:none;
@@ -791,7 +841,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   .nav-menu a{padding:10px 12px}
   .nav-menu.open{display:flex}
 
-  /* Social bar stacks nicely */
   .social-inner{
     flex-direction:column;
     align-items:flex-start;
@@ -802,7 +851,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
     flex-wrap:wrap;
   }
 
-  /* Mobile spacing refinement */
   .section{ padding:40px 0; }
   .book-card{ padding:14px; }
   .section-head{ margin-bottom:12px; }
