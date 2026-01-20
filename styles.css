@@ -675,37 +675,41 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
 }
 
 /* =========================
-   ARCHIVE VIDEO (NEW)
-   Matches the same “archive card” feel, but quieter.
+   ARCHIVE VIDEO (UPDATED)
+   - fixes letterboxing
+   - makes it feel “recovered”
+   - keeps everything else untouched
 ========================= */
 .site-video{
   margin:14px 0 14px;
   border-radius:var(--radius);
   overflow:hidden;
   border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.03);
+  background:
+    radial-gradient(900px 260px at 20% 35%, rgba(255,255,255,.06), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.12));
   box-shadow:var(--shadowSoft);
+  position:relative;
 }
 
-/* The video itself */
+/* The video itself (THIS is the key fix) */
 .site-video video{
   width:100%;
+  aspect-ratio:16/9;     /* locks a clean frame */
   height:auto;
   display:block;
+  object-fit:cover;      /* fills the frame, no black dead space */
+  background:#06070a;
 
-  /* Archival processing look */
   filter:
     saturate(0.78)
-    contrast(1.08)
+    contrast(1.10)
     brightness(0.92)
-    blur(0.15px);
+    blur(0.18px);
   opacity:0.92;
 }
 
-/* Add a subtle “scanline” / film overlay without images */
-.site-video{
-  position:relative;
-}
+/* Scanline overlay */
 .site-video::before{
   content:"";
   position:absolute;
@@ -720,7 +724,19 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
       rgba(0,0,0,0.00) 6px
     );
   mix-blend-mode:overlay;
-  opacity:0.20;
+  opacity:0.18;
+}
+
+/* Vignette + slight glass edge */
+.site-video::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,0.00) 45%, rgba(0,0,0,0.28) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.00) 22%);
+  opacity:0.85;
 }
 
 /* Caption reads like a label */
@@ -732,6 +748,8 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   font-size:.78rem;
   letter-spacing:.14em;
   text-transform:uppercase;
+  position:relative;
+  z-index:2;
 }
 
 /* =========================
