@@ -11,6 +11,9 @@
   --shadowSoft: 0 8px 24px rgba(0,0,0,.24);
   --radius: 18px;
   --max: 1120px;
+
+  /* NEW: bottom socials bar height (used for safe padding) */
+  --socialbar-h: 56px;
 }
 
 *{box-sizing:border-box}
@@ -26,6 +29,9 @@ body{
   line-height:1.55;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  /* NEW: prevents sticky socials bar from covering page content */
+  padding-bottom: calc(var(--socialbar-h) + 18px);
 }
 
 a{color:inherit; text-decoration:none}
@@ -156,7 +162,7 @@ textarea:focus-visible{
   z-index:2;
 }
 
-/* NEW: fallback initials behind the image */
+/* fallback initials behind the image */
 .brand-fallback{
   position:absolute;
   inset:0;
@@ -170,25 +176,8 @@ textarea:focus-visible{
   z-index:1;
 }
 
-/* Brand text stack (optional 2 lines) */
-.brand-stack{
-  display:flex;
-  flex-direction:column;
-  line-height:1.05;
-  min-width:0;
-}
 .brand-text{
   opacity:.95;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.brand-sub{
-  margin-top:2px;
-  font-size:.8rem;
-  color:var(--muted);
-  font-weight:600;
-  opacity:.9;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -229,8 +218,13 @@ textarea:focus-visible{
 }
 
 /* Optional cue for external link (Print Shop) */
-#siteNav .nav-menu a[data-nav="print"]{ position:relative; }
-#siteNav .nav-menu a[data-nav="print"]::after{
+#siteNav .nav-menu a[data-nav="print"],
+#siteNav .nav-menu a[data-nav="tiktok"],
+#siteNav .nav-menu a[data-nav="instagram"]{ position:relative; }
+
+#siteNav .nav-menu a[data-nav="print"]::after,
+#siteNav .nav-menu a[data-nav="tiktok"]::after,
+#siteNav .nav-menu a[data-nav="instagram"]::after{
   content:"↗";
   display:inline-block;
   margin-left:.35rem;
@@ -239,7 +233,9 @@ textarea:focus-visible{
   opacity:.55;
   transform: translateY(-1px);
 }
-#siteNav .nav-menu a[data-nav="print"]:hover::after{ opacity:.85; }
+#siteNav .nav-menu a[data-nav="print"]:hover::after,
+#siteNav .nav-menu a[data-nav="tiktok"]:hover::after,
+#siteNav .nav-menu a[data-nav="instagram"]:hover::after{ opacity:.85; }
 
 .nav-toggle{
   display:none;
@@ -249,6 +245,62 @@ textarea:focus-visible{
   padding:9px 12px;
   border-radius:12px;
   cursor:pointer;
+}
+
+/* =========================
+   NEW: Sticky Social Bar (bottom)
+========================= */
+.site-socialbar{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1100;
+  height: var(--socialbar-h);
+  display:flex;
+  align-items:center;
+  backdrop-filter: blur(10px);
+  background: rgba(11,12,16,.70);
+  border-top: 1px solid var(--line);
+}
+
+.social-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.social-label{
+  color: var(--muted);
+  font-size: .95rem;
+  white-space:nowrap;
+}
+
+.social-links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.social-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+}
+.social-pill:hover{
+  opacity:1;
+  box-shadow: var(--shadowSoft);
+  transform: translateY(-1px);
+}
+.social-pill .handle{
+  color: var(--muted);
+  font-size: .92em;
 }
 
 /* =========================
@@ -405,7 +457,7 @@ h1{
   border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-/* Ashes page: make it feel more "case file" (tighter, more institutional) */
+/* Ashes page: more "case file" */
 body[data-page="ashes"] .section.alt{
   background: linear-gradient(180deg, rgba(255,255,255,.020), rgba(255,255,255,.006));
   border-top:1px solid rgba(255,255,255,.07);
@@ -472,7 +524,7 @@ blockquote{
 }
 
 /* =========================
-   FORMS (Fixes the "mashed" contact)
+   FORMS
 ========================= */
 .form{
   display:grid;
@@ -544,7 +596,6 @@ blockquote{
   .cover img{max-height:52vh;}
   .teaser-figure img{max-height:52vh;}
 
-  /* Book page cover: smaller on phones */
   .cover.cover--contain img{ max-height:46vh; }
 }
 
@@ -565,13 +616,17 @@ blockquote{
   .nav-menu a{padding:10px 12px}
   .nav-menu.open{display:flex}
 
-  /* keep Print Shop cue clean in dropdown */
-  #siteNav .nav-menu a[data-nav="print"]::after{content:""; margin-left:0;}
+  /* keep external cue clean in dropdown */
+  #siteNav .nav-menu a[data-nav="print"]::after,
+  #siteNav .nav-menu a[data-nav="tiktok"]::after,
+  #siteNav .nav-menu a[data-nav="instagram"]::after{content:""; margin-left:0;}
 
   .cover img{max-height:48vh;}
   .teaser-figure img{max-height:48vh;}
   .cover.cover--contain img{ max-height:42vh; }
 
-  /* tighter brand stack on small screens */
-  .brand-sub{display:none;}
+  /* Social bar stacks nicer on small screens */
+  :root{ --socialbar-h: 64px; }
+  .social-inner{flex-direction:column; align-items:flex-start; gap:8px;}
+  .social-links{justify-content:flex-start;}
 }
