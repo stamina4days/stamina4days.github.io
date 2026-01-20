@@ -44,16 +44,6 @@
     });
   };
 
-  const setActiveNavLink = () => {
-    if (!navContainer) return;
-
-    const activeKey = (navContainer.getAttribute("data-active") || "").trim();
-    if (!activeKey) return;
-
-    const link = navContainer.querySelector(`[data-nav="${activeKey}"]`);
-    if (link) link.classList.add("active");
-  };
-
   const wireCopyPitch = () => {
     const copyBtn = document.getElementById("copyPitch");
     const status = document.getElementById("copyStatus");
@@ -63,17 +53,15 @@
     const pitch =
       "A quiet, escalating record of what happens when observation stops being neutral and becomes a force.";
 
+    let tId = null;
     const setStatus = (msg) => {
       if (!status) return;
       status.textContent = msg;
-
-      // Use a stable timer holder (avoid attaching props to a function)
-      if (setStatus._t) window.clearTimeout(setStatus._t);
-      setStatus._t = window.setTimeout(() => {
+      if (tId) window.clearTimeout(tId);
+      tId = window.setTimeout(() => {
         if (status) status.textContent = "";
       }, 1200);
     };
-    setStatus._t = null;
 
     copyBtn.addEventListener("click", async () => {
       try {
@@ -83,7 +71,7 @@
           return;
         }
       } catch {
-        // fall through to legacy copy
+        // fall through
       }
 
       // Legacy fallback
@@ -106,43 +94,44 @@
   };
 
   const runPageWires = () => {
-    // These should work even if nav fails to load
     wireFooterYear();
     wireCopyPitch();
   };
 
   const injectNav = async () => {
-    // Always wire page stuff immediately
+    // Wire page features even if nav fails
     runPageWires();
-
     if (!navContainer) return;
 
     try {
-      // ensure hidden state before injection (so fade actually happens)
       navContainer.classList.remove("nav-ready");
 
-      // Cache-bust the nav include so updates show immediately on GitHub Pages
-      const res = await fetch(`/partials/nav.html?v=${Date.now()}`, { cache: "no-store" });
+      // IMPORTANT:
+      // Use a RELATIVE path so it works from /book.html, /ashes.html, etc.
+      // This assumes your structure is:
+      //   /partials/nav.html
+      // and the page is in the root (index.html, book.html, etc.)
+      const navUrl = `partials/nav.html?v=${Date.now()}`;
+
+      const res = await fetch(navUrl, { cache: "no-store" });
       if (!res.ok) throw new Error(`Nav fetch failed: ${res.status}`);
 
       const html = await res.text();
       navContainer.innerHTML = html;
 
-      // Now that it's in the DOM, wire it up
       wireNavToggle();
-      setActiveNavLink();
 
-      // Trigger fade in on next frame
+      // Your CSS already handles active states via #siteNav[data-active="..."]
+      // so we don't need to add an "active" class. Leaving this out avoids conflicts.
+
       requestAnimationFrame(() => {
         navContainer.classList.add("nav-ready");
       });
     } catch (err) {
       console.warn(err);
-      // Page wiring already ran, so we're good even if nav fails
     }
   };
 
-  // Run after DOM is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", injectNav);
   } else {
