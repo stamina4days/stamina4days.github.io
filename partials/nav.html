@@ -1,7 +1,9 @@
+<!-- partials/nav.html -->
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="Residual Ink home">
       <span class="brand-mark" aria-hidden="true">
+        <span class="brand-fallback">RI</span>
         <img
           src="/assets/residual-ink-badge.png"
           alt=""
@@ -33,7 +35,7 @@
         <a
           href="https://www.zazzle.com/store/author_centric/products"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           data-nav="print"
           title="Merch and print extras (opens in a new tab)"
         >
@@ -45,3 +47,28 @@
     </nav>
   </div>
 </header>
+
+<!-- Sticky socials bar (shows on every page) -->
+<div class="site-socialbar" role="navigation" aria-label="Social links">
+  <div class="container social-inner">
+    <div class="social-label">Follow</div>
+
+    <div class="social-links">
+      <a
+        class="social-pill"
+        href="/go/tiktok.html"
+        aria-label="TikTok @stamina4days"
+      >
+        TikTok <span class="handle">@stamina4days</span>
+      </a>
+
+      <a
+        class="social-pill"
+        href="/go/instagram.html"
+        aria-label="Instagram @prince_residual_ink"
+      >
+        Instagram <span class="handle">@prince_residual_ink</span>
+      </a>
+    </div>
+  </div>
+</div>
