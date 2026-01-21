@@ -42,10 +42,11 @@
       </div>
 
       <div class="book-grid">
-        <div class="book-card ashes-teaser-card">
+        <!-- Teaser: full-width artifact, with scroll-activated classified treatment -->
+        <div class="book-card ashes-teaser-card" data-classified>
           <h3>Teaser</h3>
 
-          <figure class="teaser-figure" style="margin-top:12px">
+          <figure class="cover cover--contain">
             <img
               src="assets/ashes-teaser.jpeg"
               alt="Teaser image for Ashes Don’t Lie by Prince Hubbard"
@@ -53,12 +54,17 @@
               decoding="async"
             />
             <figcaption class="cover-caption">
-              <span class="title">Ashes Don’t Lie</span>
-              <span class="subtitle">Availability pending. Conditions are improving.</span>
+              <span class="title">Unfinished Case File #1</span>
+              <span class="subtitle">Further evidence pending</span>
             </figcaption>
           </figure>
 
-          <p class="fine muted" style="margin-top:12px">
+          <!-- This block is what lets spacing land cleanly below the teaser -->
+          <div class="ashes-status">
+            <p class="fine muted">Availability pending. Conditions are improving.</p>
+          </div>
+
+          <p class="fine muted">
             Replace this image any time. Keep the filename the same to update instantly.
           </p>
         </div>
