@@ -873,3 +873,112 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   .book-card{ padding:14px; }
   .section-head{ margin-bottom:12px; }
 }
+
+/* =========================
+   ASHES RHYTHM + CLASSIFIED (ADD-ON)
+   (New: spacing, rhythm, and scroll-activated "classified record")
+========================= */
+
+/* Keep Ashes page rhythm consistent with Book page */
+body[data-page="ashes"] .section-head{
+  margin-bottom: 16px;
+}
+
+/* Normalize Ashes teaser figure spacing (avoid inline styles) */
+body[data-page="ashes"] .ashes-teaser-card h3{
+  margin-bottom: 12px;
+}
+
+/* Status line directly under teaser (so it “lands” cleanly) */
+.ashes-status{
+  margin-top: 12px;          /* space from cover */
+  padding-top: 12px;         /* subtle separation */
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* Tighten the small note under teaser so it doesn’t feel loose */
+body[data-page="ashes"] .ashes-teaser-card > p.fine{
+  margin-top: 10px;
+}
+
+/* =========================
+   CLASSIFIED RECORD (scroll-activated)
+   Works with script.js adding .is-revealed to [data-classified]
+========================= */
+
+/* Base state: NOT active until scrolled into view */
+[data-classified]{
+  position: relative;
+  overflow: hidden; /* contain overlays */
+  filter: saturate(0.98) contrast(1.02);
+}
+
+/* A subtle dossier frame (always present) */
+[data-classified]::before{
+  content:"";
+  position:absolute;
+  inset:10px;
+  border-radius: calc(var(--radius) - 6px);
+  pointer-events:none;
+  border: 1px dashed rgba(255,255,255,.10);
+  opacity: .55;
+  z-index:1;
+}
+
+/* The “classified” overlay that activates ON REVEAL */
+[data-classified]::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+
+  background:
+    radial-gradient(900px 260px at 20% 10%, rgba(155,255,212,.09), transparent 60%),
+    radial-gradient(1100px 420px at 85% 30%, rgba(122,162,255,.08), transparent 65%),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.020) 0px,
+      rgba(255,255,255,0.020) 1px,
+      rgba(0,0,0,0.00) 3px,
+      rgba(0,0,0,0.00) 7px
+    ),
+    linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.08));
+
+  opacity: 0;               /* OFF by default */
+  transform: translateY(8px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+
+/* Turns on when the section becomes visible */
+[data-classified].is-revealed::after{
+  opacity: .85;
+  transform: translateY(0);
+}
+
+/* Then we “clear” it after a beat so the page becomes readable */
+@media (prefers-reduced-motion: no-preference){
+  [data-classified].is-revealed{
+    animation: classifiedClear 1.35s ease .35s forwards;
+  }
+  @keyframes classifiedClear{
+    to{ filter: none; }
+  }
+
+  [data-classified].is-revealed::after{
+    animation: overlayFadeOut 1.4s ease .55s forwards;
+  }
+  @keyframes overlayFadeOut{
+    0%{ opacity:.85; }
+    100%{ opacity:.18; }
+  }
+}
+
+/* Reduced motion: keep it faint and static */
+@media (prefers-reduced-motion: reduce){
+  [data-classified]::after{
+    opacity: .14;
+    transform:none;
+    transition:none;
+  }
+}
