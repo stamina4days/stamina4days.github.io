@@ -25,12 +25,10 @@
       toggle.setAttribute("aria-expanded", String(isOpen));
     });
 
-    // Close menu when clicking a link
     menu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", closeMenu);
     });
 
-    // Close menu when clicking outside
     document.addEventListener("click", (e) => {
       if (!menu.classList.contains("open")) return;
       const t = e.target;
@@ -38,7 +36,6 @@
       if (!menu.contains(t) && !toggle.contains(t)) closeMenu();
     });
 
-    // Close menu on Escape
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
     });
@@ -93,24 +90,56 @@
     });
   };
 
+  // NEW: scroll-activated "classified record" treatment
+  const wireClassifiedReveal = () => {
+    const targets = document.querySelectorAll("[data-classified]");
+    if (!targets.length) return;
+
+    const prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReduced) {
+      targets.forEach((el) => el.classList.add("is-revealed"));
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((el) => el.classList.add("is-revealed"));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    targets.forEach((el) => io.observe(el));
+  };
+
   const runPageWires = () => {
     wireFooterYear();
     wireCopyPitch();
+    wireClassifiedReveal();
   };
 
   const injectNav = async () => {
-    // Wire page features even if nav fails
+    // Always wire page features even if nav fails
     runPageWires();
+
     if (!navContainer) return;
 
     try {
       navContainer.classList.remove("nav-ready");
 
-      // IMPORTANT:
-      // Use a RELATIVE path so it works from /book.html, /ashes.html, etc.
-      // This assumes your structure is:
-      //   /partials/nav.html
-      // and the page is in the root (index.html, book.html, etc.)
+      // Relative path + cache-bust so GitHub Pages doesn’t serve an old nav
       const navUrl = `partials/nav.html?v=${Date.now()}`;
 
       const res = await fetch(navUrl, { cache: "no-store" });
@@ -120,9 +149,6 @@
       navContainer.innerHTML = html;
 
       wireNavToggle();
-
-      // Your CSS already handles active states via #siteNav[data-active="..."]
-      // so we don't need to add an "active" class. Leaving this out avoids conflicts.
 
       requestAnimationFrame(() => {
         navContainer.classList.add("nav-ready");
