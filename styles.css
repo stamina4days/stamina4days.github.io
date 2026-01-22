@@ -307,7 +307,7 @@ h3{margin:0 0 10px}
   display:flex;
   align-items:center;
   gap:10px;
-  position:relative;
+  position:relative; /* anchor dropdown */
 }
 
 .nav-menu{
@@ -422,9 +422,7 @@ h1{
 .muted{color:var(--muted)}
 .sep{opacity:.5; margin:0 8px}
 
-.subtle-note{
-  margin:6px 0 0;
-}
+.subtle-note{ margin:6px 0 0; }
 
 /* Meta chips */
 .hero-meta{
@@ -464,9 +462,7 @@ h1{
   border-top:1px solid rgba(255,255,255,.08);
   max-width:62ch;
 }
-.hero-signup .ml-embedded{
-  margin:10px 0;
-}
+.hero-signup .ml-embedded{ margin:10px 0; }
 
 /* =========================
    BUY BUTTONS (Book page)
@@ -494,9 +490,7 @@ h1{
   font-size:.92rem;
   color:var(--text);
 }
-.isbn-block strong{
-  font-weight:800;
-}
+.isbn-block strong{ font-weight:800; }
 
 /* =========================
    LISTS / BULLETS
@@ -573,12 +567,32 @@ h1{
   box-shadow:var(--shadowSoft);
 }
 
-body[data-page="book"] .book-grid .book-card.cover-card{
-  grid-column: 1 / -1;
+body[data-page="book"] .book-grid .book-card.cover-card{ grid-column: 1 / -1; }
+body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{ grid-column: 1 / -1; }
+
+/* =========================
+   ASHES RHYTHM + TEASER IMAGE FIX
+========================= */
+body[data-page="ashes"] .section-head{ margin-bottom: 16px; }
+
+body[data-page="ashes"] .teaser-figure{ margin: 12px 0 0; }
+
+/* Teaser image too large: keep it framed + consistent */
+body[data-page="ashes"] .teaser-figure img{
+  width:100%;
+  max-height:520px;
+  object-fit:cover;
+  border-radius: calc(var(--radius) - 6px);
 }
-body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
-  grid-column: 1 / -1;
+
+/* Status line directly under teaser */
+.ashes-status{
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.08);
 }
+
+body[data-page="ashes"] .ashes-teaser-card > p.fine{ margin-top: 10px; }
 
 /* =========================
    ARCHIVE / ACCESS
@@ -610,10 +624,7 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   }
 }
 
-.archive-line{
-  margin:0 0 14px;
-  color:var(--muted);
-}
+.archive-line{ margin:0 0 14px; color:var(--muted); }
 
 .archive-links{
   display:flex;
@@ -813,18 +824,21 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
 @media (max-width:720px){
   :root{ --socialbar-h: 86px; }
 
+  /* Mobile nav dropdown */
   .nav-toggle{display:inline-flex}
   .nav-menu{
     display:none;
     position:absolute;
-    right:20px;
-    top:60px;
+    right:0;
+    top:calc(100% + 10px);
     flex-direction:column;
     background:rgba(11,12,16,.92);
     border:1px solid rgba(255,255,255,.12);
     border-radius:16px;
     padding:10px;
     min-width:220px;
+    z-index:1200;
+    box-shadow:var(--shadowSoft);
   }
   .nav-menu a{padding:10px 12px}
   .nav-menu.open{display:flex}
@@ -845,41 +859,9 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
 }
 
 /* =========================
-   ASHES RHYTHM + CLASSIFIED (ADD-ON)
-========================= */
-
-/* Match Ashes page rhythm to Book page */
-body[data-page="ashes"] .section-head{
-  margin-bottom: 16px;
-}
-
-/* Remove reliance on inline styles */
-body[data-page="ashes"] .teaser-figure{
-  margin: 12px 0 0;
-}
-
-/* Keep heading spacing consistent */
-body[data-page="ashes"] .ashes-teaser-card h3{
-  margin-bottom: 12px;
-}
-
-/* Status line directly under teaser (so it “lands” cleanly) */
-.ashes-status{
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255,255,255,.08);
-}
-
-/* Tighten small note under teaser */
-body[data-page="ashes"] .ashes-teaser-card > p.fine{
-  margin-top: 10px;
-}
-
-/* =========================
    CLASSIFIED RECORD (scroll-activated)
    Works with script.js adding .is-revealed to [data-classified]
 ========================= */
-
 [data-classified]{
   position: relative;
   overflow: hidden;
