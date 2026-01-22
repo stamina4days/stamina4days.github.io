@@ -11,31 +11,47 @@
   const wireNavToggle = () => {
     const toggle = document.getElementById("navToggle");
     const menu = document.getElementById("navMenu");
-
-    const closeMenu = () => {
-      if (!menu) return;
-      menu.classList.remove("open");
-      if (toggle) toggle.setAttribute("aria-expanded", "false");
-    };
-
     if (!toggle || !menu) return;
 
-    toggle.addEventListener("click", () => {
+    const closeMenu = () => {
+      menu.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+
+    // Toggle open/close
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
       const isOpen = menu.classList.toggle("open");
       toggle.setAttribute("aria-expanded", String(isOpen));
     });
 
+    // Close menu when clicking a link
     menu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", closeMenu);
     });
 
+    // Close menu when clicking outside
     document.addEventListener("click", (e) => {
       if (!menu.classList.contains("open")) return;
-      const t = e.target;
-      if (!(t instanceof Node)) return;
-      if (!menu.contains(t) && !toggle.contains(t)) closeMenu();
+
+      const target = e.target;
+      // Guard for weird environments (and SVG clicks)
+      if (!target || typeof target !== "object") return;
+
+      // Use closest when possible (safe + fast)
+      const clickedToggle =
+        typeof target.closest === "function" && target.closest("#navToggle");
+      const clickedMenu =
+        typeof target.closest === "function" && target.closest("#navMenu");
+
+      // If closest isn't available, fallback to contains()
+      const isInsideToggle = clickedToggle || toggle.contains(target);
+      const isInsideMenu = clickedMenu || menu.contains(target);
+
+      if (!isInsideMenu && !isInsideToggle) closeMenu();
     });
 
+    // Close menu on Escape
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
     });
@@ -56,11 +72,12 @@
       status.textContent = msg;
       if (tId) window.clearTimeout(tId);
       tId = window.setTimeout(() => {
-        if (status) status.textContent = "";
+        status.textContent = "";
       }, 1200);
     };
 
     copyBtn.addEventListener("click", async () => {
+      // Modern clipboard path
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(pitch);
@@ -90,7 +107,7 @@
     });
   };
 
-  // NEW: scroll-activated "classified record" treatment
+  // Scroll-activated "classified record" treatment
   const wireClassifiedReveal = () => {
     const targets = document.querySelectorAll("[data-classified]");
     if (!targets.length) return;
@@ -99,11 +116,13 @@
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // If user prefers reduced motion, just mark revealed (no animation fuss)
     if (prefersReduced) {
       targets.forEach((el) => el.classList.add("is-revealed"));
       return;
     }
 
+    // No IO support? Reveal immediately
     if (!("IntersectionObserver" in window)) {
       targets.forEach((el) => el.classList.add("is-revealed"));
       return;
@@ -118,7 +137,10 @@
           }
         });
       },
-      { threshold: 0.25 }
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -10% 0px", // triggers a bit earlier, feels smoother
+      }
     );
 
     targets.forEach((el) => io.observe(el));
@@ -131,23 +153,22 @@
   };
 
   const injectNav = async () => {
-    // Always wire page features even if nav fails
+    // Wire page features even if nav fails
     runPageWires();
-
     if (!navContainer) return;
 
     try {
       navContainer.classList.remove("nav-ready");
 
-      // Relative path + cache-bust so GitHub Pages doesn’t serve an old nav
+      // Relative path + cache-bust for GitHub Pages
       const navUrl = `partials/nav.html?v=${Date.now()}`;
 
       const res = await fetch(navUrl, { cache: "no-store" });
       if (!res.ok) throw new Error(`Nav fetch failed: ${res.status}`);
 
-      const html = await res.text();
-      navContainer.innerHTML = html;
+      navContainer.innerHTML = await res.text();
 
+      // Now that nav exists, wire nav interactions
       wireNavToggle();
 
       requestAnimationFrame(() => {
