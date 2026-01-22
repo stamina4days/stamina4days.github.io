@@ -25,18 +25,12 @@ body{ overflow-x:hidden; }
 
 /* =========================
    ARTISTIC ARCHIVAL BACKGROUND + SCROLL FADE
-   - paper grain
-   - document banding
-   - ink bloom
-   - subtle "attention fades" overlay on scroll
 ========================= */
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
 
-  /* Archival, document-like background (no images, all CSS) */
   background:
-    /* Paper grain */
     repeating-linear-gradient(
       90deg,
       rgba(255,255,255,0.015) 0px,
@@ -44,30 +38,22 @@ body{
       transparent 1px,
       transparent 6px
     ),
-
-    /* Vertical document banding */
     linear-gradient(
       180deg,
       rgba(255,255,255,0.04) 0%,
       rgba(255,255,255,0.02) 12%,
       rgba(255,255,255,0.00) 40%
     ),
-
-    /* Ink bloom / attention focus */
     radial-gradient(
       900px 420px at 18% 8%,
       rgba(155,255,212,0.08),
       transparent 60%
     ),
-
-    /* Secondary cold presence */
     radial-gradient(
       1100px 520px at 82% 18%,
       rgba(122,162,255,0.06),
       transparent 65%
     ),
-
-    /* Base graphite */
     linear-gradient(
       180deg,
       #0a0b10 0%,
@@ -80,22 +66,17 @@ body{
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
-  /* Prevents sticky socials bar from covering content */
   padding-bottom: calc(var(--socialbar-h) + 20px);
-
-  /* Needed for the overlay */
   position:relative;
 }
 
-/* Scroll-fade overlay: subtly darkens as you move down the page */
+/* Scroll-fade overlay */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:0;
-
-  /* This is the "fade": top is clearer, bottom is heavier */
   background:
     linear-gradient(
       180deg,
@@ -104,11 +85,10 @@ body::before{
       rgba(0,0,0,0.14) 55%,
       rgba(0,0,0,0.22) 100%
     );
-
   opacity:0.85;
 }
 
-/* Ensure your content sits above the overlay */
+/* Ensure content above overlay */
 #siteNav,
 main,
 .site-socialbar{
@@ -116,7 +96,6 @@ main,
   z-index:1;
 }
 
-/* Respect reduced motion / sensitivity */
 @media (prefers-reduced-motion: reduce){
   body::before{ display:none; }
 }
@@ -194,7 +173,6 @@ h3{margin:0 0 10px}
   box-shadow:0 0 0 3px rgba(255,255,255,.06);
 }
 
-/* Variants */
 .stamp--approved{
   border-style:solid;
   border-color: rgba(155,255,212,.18);
@@ -676,9 +654,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
 
 /* =========================
    ARCHIVE VIDEO (UPDATED)
-   - fixes letterboxing
-   - makes it feel “recovered”
-   - keeps everything else untouched
 ========================= */
 .site-video{
   margin:14px 0 14px;
@@ -692,15 +667,13 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   position:relative;
 }
 
-/* The video itself (THIS is the key fix) */
 .site-video video{
   width:100%;
-  aspect-ratio:16/9;     /* locks a clean frame */
+  aspect-ratio:16/9;
   height:auto;
   display:block;
-  object-fit:cover;      /* fills the frame, no black dead space */
+  object-fit:cover;
   background:#06070a;
-
   filter:
     saturate(0.78)
     contrast(1.10)
@@ -709,7 +682,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   opacity:0.92;
 }
 
-/* Scanline overlay */
 .site-video::before{
   content:"";
   position:absolute;
@@ -727,7 +699,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   opacity:0.18;
 }
 
-/* Vignette + slight glass edge */
 .site-video::after{
   content:"";
   position:absolute;
@@ -739,7 +710,6 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
   opacity:0.85;
 }
 
-/* Caption reads like a label */
 .video-caption{
   padding:10px 12px;
   border-top:1px solid rgba(255,255,255,.08);
@@ -876,27 +846,31 @@ body[data-page="ashes"] .book-grid .book-card.ashes-teaser-card{
 
 /* =========================
    ASHES RHYTHM + CLASSIFIED (ADD-ON)
-   (New: spacing, rhythm, and scroll-activated "classified record")
 ========================= */
 
-/* Keep Ashes page rhythm consistent with Book page */
+/* Match Ashes page rhythm to Book page */
 body[data-page="ashes"] .section-head{
   margin-bottom: 16px;
 }
 
-/* Normalize Ashes teaser figure spacing (avoid inline styles) */
+/* Remove reliance on inline styles */
+body[data-page="ashes"] .teaser-figure{
+  margin: 12px 0 0;
+}
+
+/* Keep heading spacing consistent */
 body[data-page="ashes"] .ashes-teaser-card h3{
   margin-bottom: 12px;
 }
 
 /* Status line directly under teaser (so it “lands” cleanly) */
 .ashes-status{
-  margin-top: 12px;          /* space from cover */
-  padding-top: 12px;         /* subtle separation */
+  margin-top: 12px;
+  padding-top: 12px;
   border-top: 1px solid rgba(255,255,255,.08);
 }
 
-/* Tighten the small note under teaser so it doesn’t feel loose */
+/* Tighten small note under teaser */
 body[data-page="ashes"] .ashes-teaser-card > p.fine{
   margin-top: 10px;
 }
@@ -906,14 +880,12 @@ body[data-page="ashes"] .ashes-teaser-card > p.fine{
    Works with script.js adding .is-revealed to [data-classified]
 ========================= */
 
-/* Base state: NOT active until scrolled into view */
 [data-classified]{
   position: relative;
-  overflow: hidden; /* contain overlays */
+  overflow: hidden;
   filter: saturate(0.98) contrast(1.02);
 }
 
-/* A subtle dossier frame (always present) */
 [data-classified]::before{
   content:"";
   position:absolute;
@@ -925,7 +897,6 @@ body[data-page="ashes"] .ashes-teaser-card > p.fine{
   z-index:1;
 }
 
-/* The “classified” overlay that activates ON REVEAL */
 [data-classified]::after{
   content:"";
   position:absolute;
@@ -945,18 +916,16 @@ body[data-page="ashes"] .ashes-teaser-card > p.fine{
     ),
     linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.08));
 
-  opacity: 0;               /* OFF by default */
+  opacity: 0;
   transform: translateY(8px);
   transition: opacity .55s ease, transform .55s ease;
 }
 
-/* Turns on when the section becomes visible */
 [data-classified].is-revealed::after{
   opacity: .85;
   transform: translateY(0);
 }
 
-/* Then we “clear” it after a beat so the page becomes readable */
 @media (prefers-reduced-motion: no-preference){
   [data-classified].is-revealed{
     animation: classifiedClear 1.35s ease .35s forwards;
@@ -974,7 +943,6 @@ body[data-page="ashes"] .ashes-teaser-card > p.fine{
   }
 }
 
-/* Reduced motion: keep it faint and static */
 @media (prefers-reduced-motion: reduce){
   [data-classified]::after{
     opacity: .14;
