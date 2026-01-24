@@ -35,7 +35,6 @@ body{
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
 
   background:
-    /* soften the stripe noise slightly */
     repeating-linear-gradient(
       90deg,
       rgba(255,255,255,0.012) 0px,
@@ -92,7 +91,7 @@ body::before{
   opacity:0.85;
 }
 
-/* Add a soft hero spotlight to reduce background competition */
+/* Soft hero spotlights */
 body::after{
   content:"";
   position:fixed;
@@ -294,10 +293,11 @@ h3{margin:0 0 10px}
 .nav-menu{
   display:flex;
   gap:18px;
+  align-items:center;
 }
 
 .nav-menu a{
-  padding:9px 10px;
+  padding:10px 12px;
   border-radius:12px;
   color:var(--muted);
   border:1px solid transparent;
@@ -315,6 +315,12 @@ h3{margin:0 0 10px}
 #siteNav[data-active="press"]    .nav-menu a[data-nav="press"],
 #siteNav[data-active="contact"]  .nav-menu a[data-nav="contact"],
 #siteNav[data-active="projects"] .nav-menu a[data-nav="projects"]{
+  color:var(--text);
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.14);
+}
+
+.nav-menu a[aria-current="page"]{
   color:var(--text);
   background:rgba(255,255,255,.10);
   border:1px solid rgba(255,255,255,.14);
@@ -370,16 +376,21 @@ h1{
   opacity:.88;
 }
 
-/* Button rows */
+/* Primary CTA layout: 3 across on desktop */
 .hero-cta{
-  display:flex;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap:12px;
-  flex-wrap:wrap;
   margin-bottom:10px;
 }
+.hero-cta .btn{
+  width:100%;
+}
+.hero-cta .btn:nth-child(n+4){
+  opacity:.94;
+}
 
-.hero-cta--left{ justify-content:flex-start; }
-
+/* Buttons */
 .btn{
   display:inline-flex;
   align-items:center;
@@ -407,35 +418,13 @@ h1{
 }
 
 .btn.primary{
-  background:linear-gradient(135deg, rgba(122,162,255,.35), rgba(155,255,212,.22));
-  border-color: rgba(255,255,255,.14);
+  background:linear-gradient(135deg, rgba(122,162,255,.38), rgba(155,255,212,.22));
+  border-color: rgba(255,255,255,.16);
 }
 
 .btn.ghost{
-  background:rgba(255,255,255,.035);
+  background:rgba(255,255,255,.032);
   border-color: rgba(255,255,255,.10);
-}
-
-/* Optional "secondary links row" style if you move Print Shop and Projects */
-.hero-links{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin:6px 0 0;
-}
-.hero-links a{
-  display:inline-flex;
-  align-items:center;
-  padding:8px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.03);
-  color:rgba(233,236,244,.84);
-  font-size:.92rem;
-}
-.hero-links a:hover{
-  opacity:1;
-  background:rgba(255,255,255,.05);
 }
 
 .fine{font-size:.92rem;color:var(--muted)}
@@ -473,7 +462,7 @@ h1{
   box-shadow:0 0 0 3px rgba(122,162,255,.12);
 }
 
-/* Signup panel treatment */
+/* Signup module */
 .hero-signup{
   margin-top:16px;
   padding:14px;
@@ -482,7 +471,40 @@ h1{
   background:rgba(255,255,255,.028);
   max-width:62ch;
 }
-.hero-signup .ml-embedded{ margin:10px 0; }
+.signup-head{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  margin-bottom:10px;
+}
+.signup-title{
+  font-weight:750;
+  letter-spacing:.04em;
+}
+.signup-sub{
+  opacity:.95;
+}
+.signup-fine{
+  margin-top:10px;
+}
+
+/* Trust row */
+.trust-row{
+  margin-top:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.trust-pill{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
+  color:rgba(233,236,244,.84);
+  font-size:.92rem;
+}
 
 /* Hero cover */
 .cover{
@@ -886,6 +908,10 @@ h1{
   .hero-grid{grid-template-columns:1fr}
   .book-grid{grid-template-columns:1fr}
   .hero{ padding:50px 0 18px; }
+
+  .hero-cta{
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width:720px){
@@ -921,11 +947,6 @@ h1{
 
   .section{ padding:42px 0; }
   .book-card{ padding:14px; min-height:auto; }
-
-  .hero-cta .btn{
-    width:100%;
-    justify-content:center;
-  }
 
   .hero-proof{
     grid-template-columns:1fr;
