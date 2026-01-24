@@ -13,47 +13,98 @@
     const menu = document.getElementById("navMenu");
     if (!toggle || !menu) return;
 
+    const isOpen = () => menu.classList.contains("open");
+
     const closeMenu = () => {
+      if (!isOpen()) return;
       menu.classList.remove("open");
       toggle.setAttribute("aria-expanded", "false");
     };
 
-    // Toggle open/close
+    const openMenu = () => {
+      if (isOpen()) return;
+      menu.classList.add("open");
+      toggle.setAttribute("aria-expanded", "true");
+    };
+
+    const toggleMenu = () => {
+      if (isOpen()) closeMenu();
+      else openMenu();
+    };
+
+    // Toggle open or close
     toggle.addEventListener("click", (e) => {
       e.preventDefault();
-      const isOpen = menu.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", String(isOpen));
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // If the toggle is focused and user presses Enter or Space
+    toggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleMenu();
+      }
     });
 
     // Close menu when clicking a link
     menu.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", closeMenu);
+      a.addEventListener("click", () => {
+        closeMenu();
+      });
     });
 
-    // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
-      if (!menu.classList.contains("open")) return;
+    // Close menu when clicking or tapping outside
+    // Use capture so it runs early and is consistent on mobile
+    document.addEventListener(
+      "click",
+      (e) => {
+        if (!isOpen()) return;
 
-      const target = e.target;
-      // Guard for weird environments (and SVG clicks)
-      if (!target || typeof target !== "object") return;
+        const target = e.target;
+        if (!target || typeof target !== "object") return;
 
-      // Use closest when possible (safe + fast)
-      const clickedToggle =
-        typeof target.closest === "function" && target.closest("#navToggle");
-      const clickedMenu =
-        typeof target.closest === "function" && target.closest("#navMenu");
+        const clickedToggle =
+          typeof target.closest === "function" && target.closest("#navToggle");
+        const clickedMenu =
+          typeof target.closest === "function" && target.closest("#navMenu");
 
-      // If closest isn't available, fallback to contains()
-      const isInsideToggle = clickedToggle || toggle.contains(target);
-      const isInsideMenu = clickedMenu || menu.contains(target);
+        const insideToggle = clickedToggle || toggle.contains(target);
+        const insideMenu = clickedMenu || menu.contains(target);
 
-      if (!isInsideMenu && !isInsideToggle) closeMenu();
-    });
+        if (!insideMenu && !insideToggle) closeMenu();
+      },
+      true
+    );
 
-    // Close menu on Escape
+    // Close on Escape
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
+    });
+
+    // Close on scroll so it cannot sit over the page
+    // Passive for performance
+    window.addEventListener(
+      "scroll",
+      () => {
+        closeMenu();
+      },
+      { passive: true }
+    );
+
+    // Close on resize or orientation change
+    window.addEventListener("resize", closeMenu, { passive: true });
+    window.addEventListener("orientationchange", closeMenu, { passive: true });
+
+    // Defensive: if focus moves away and the menu is open, close it
+    document.addEventListener("focusin", (e) => {
+      if (!isOpen()) return;
+      const target = e.target;
+      if (!target || typeof target !== "object") return;
+      const insideMenu = menu.contains(target);
+      const insideToggle = toggle.contains(target);
+      if (!insideMenu && !insideToggle) closeMenu();
     });
   };
 
@@ -77,7 +128,6 @@
     };
 
     copyBtn.addEventListener("click", async () => {
-      // Modern clipboard path
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(pitch);
@@ -88,7 +138,6 @@
         // fall through
       }
 
-      // Legacy fallback
       try {
         const ta = document.createElement("textarea");
         ta.value = pitch;
@@ -107,7 +156,7 @@
     });
   };
 
-  // Scroll-activated "classified record" treatment
+  // Scroll activated "classified record" treatment
   const wireClassifiedReveal = () => {
     const targets = document.querySelectorAll("[data-classified]");
     if (!targets.length) return;
@@ -116,13 +165,11 @@
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // If user prefers reduced motion, just mark revealed (no animation fuss)
     if (prefersReduced) {
       targets.forEach((el) => el.classList.add("is-revealed"));
       return;
     }
 
-    // No IO support? Reveal immediately
     if (!("IntersectionObserver" in window)) {
       targets.forEach((el) => el.classList.add("is-revealed"));
       return;
@@ -139,7 +186,7 @@
       },
       {
         threshold: 0.2,
-        rootMargin: "0px 0px -10% 0px", // triggers a bit earlier, feels smoother
+        rootMargin: "0px 0px -10% 0px",
       }
     );
 
@@ -153,14 +200,13 @@
   };
 
   const injectNav = async () => {
-    // Wire page features even if nav fails
     runPageWires();
     if (!navContainer) return;
 
     try {
       navContainer.classList.remove("nav-ready");
 
-      // Relative path + cache-bust for GitHub Pages
+      // Cache bust for GitHub Pages
       const navUrl = `partials/nav.html?v=${Date.now()}`;
 
       const res = await fetch(navUrl, { cache: "no-store" });
