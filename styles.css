@@ -220,7 +220,7 @@ h3{margin:0 0 10px}
 .site-header{
   position:sticky;
   top:0;
-  z-index:1000;
+  z-index:5000; /* high so it stays above content */
   backdrop-filter:blur(10px);
   background:rgba(11,12,16,.55);
   border-bottom:1px solid var(--line);
@@ -288,6 +288,7 @@ h3{margin:0 0 10px}
   align-items:center;
   gap:10px;
   position:relative;
+  width:auto;
 }
 
 .nav-menu{
@@ -334,16 +335,6 @@ h3{margin:0 0 10px}
   padding:9px 12px;
   border-radius:12px;
   cursor:pointer;
-}
-
-/* Safety: never let a closed menu block taps */
-.nav-menu:not(.open){
-  pointer-events:auto;
-}
-@media (max-width:720px){
-  .nav-menu:not(.open){
-    pointer-events:none;
-  }
 }
 
 /* =========================
@@ -933,7 +924,7 @@ h1{
     position:relative;
   }
 
-  /* Mobile dropdown that never blocks taps when closed */
+  /* MOBILE DROPDOWN: CLOSED STATE MUST NOT BLOCK TAPS */
   .nav-menu{
     display:flex;
     position:absolute;
@@ -942,20 +933,22 @@ h1{
     flex-direction:column;
 
     min-width:220px;
+    max-width:240px;
     padding:10px;
     gap:6px;
 
-    background: rgba(10,10,12,0.96);
+    background: rgba(10,10,12,0.97);
     border: 1px solid rgba(255,255,255,.12);
     border-radius:16px;
     box-shadow: var(--shadowSoft);
 
     opacity:0;
     transform: translateY(-8px) scale(.98);
-    pointer-events:none;
+    pointer-events:none;              /* key fix */
+    visibility:hidden;                /* extra safety */
     z-index:1200;
 
-    transition: opacity .18s ease, transform .18s ease;
+    transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
   }
 
   .nav-menu a{padding:10px 12px}
@@ -964,6 +957,7 @@ h1{
     opacity:1;
     transform: translateY(0) scale(1);
     pointer-events:auto;
+    visibility:visible;
   }
 
   .social-inner{
@@ -1055,49 +1049,5 @@ h1{
     opacity: .14;
     transform:none;
     transition:none;
-  }
-}
-/* =========================
-   MOBILE MENU CLICK FIX
-   (Prevents invisible overlay blocking buttons)
-========================= */
-
-@media (max-width: 720px){
-
-  /* Ensure header doesn't create a blocking layer */
-  .site-header{
-    z-index: 5000 !important;
-  }
-
-  /* Nav container must not stretch across page */
-  .nav{
-    position: relative !important;
-    width: auto !important;
-  }
-
-  /* Closed menu must not block clicks */
-  .nav-menu{
-    pointer-events: none !important;
-    opacity: 0 !important;
-    transform: translateY(-8px) scale(.98) !important;
-  }
-
-  /* Only open menu can receive clicks */
-  .nav-menu.open{
-    pointer-events: auto !important;
-    opacity: 1 !important;
-    transform: translateY(0) scale(1) !important;
-  }
-
-  /* Dropdown background must be solid */
-  .nav-menu{
-    background: rgba(10,10,12,0.97) !important;
-  }
-
-  /* Prevent menu from covering full screen */
-  .nav-menu{
-    max-width: 240px !important;
-    right: 0 !important;
-    left: auto !important;
   }
 }
