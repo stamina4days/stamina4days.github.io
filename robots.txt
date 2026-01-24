@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stamina4days.github.io/sitemap.xml
