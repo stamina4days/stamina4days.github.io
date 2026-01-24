@@ -23,8 +23,10 @@
   <meta name="twitter:image" content="https://stamina4days.github.io/assets/og.jpg" />
 
   <link rel="icon" href="/assets/favicon.png" />
-  <link rel="stylesheet" href="/styles.css?v=20260123" />
+  <link rel="stylesheet" href="/styles.css?v=20260123b" />
   <meta name="theme-color" content="#111111" />
+
+  <link rel="preload" as="image" href="/assets/bound-to-witness-cover.jpg" />
 </head>
 
 <body data-page="home">
@@ -52,9 +54,9 @@
             Start with Bound to Witness, then explore the archive.
           </p>
 
-          <div class="hero-cta">
+          <div class="hero-cta" aria-label="Primary actions">
             <a class="btn primary" href="https://www.amazon.com/dp/B0GH87NC3D" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
-            <a class="btn" href="https://www.barnesandnoble.com/w/bound-to-witness-prince-hubbard/1149223535?ean=9798279626557" target="_blank" rel="noopener noreferrer">Buy on Barnes &amp; Noble</a>
+            <a class="btn" href="https://www.barnesandnoble.com/w/bound-to-witness-prince-hubbard/1149223535?ean=9798279626557" target="_blank" rel="noopener noreferrer">Buy on Barnes and Noble</a>
             <a class="btn" href="/book.html">Read details</a>
             <a class="btn ghost" href="https://www.zazzle.com/store/author_centric/products" target="_blank" rel="noopener noreferrer">Print Shop</a>
             <a class="btn ghost" href="/projects.html">Projects</a>
@@ -66,9 +68,24 @@
           </div>
 
           <div class="hero-signup" aria-label="Email updates">
-            <p class="fine muted">Occasional updates on new releases, availability, and press. No spam.</p>
+            <div class="signup-head">
+              <div class="signup-title">Updates</div>
+              <div class="signup-sub fine muted">Occasional news on releases, availability, and press. No spam.</div>
+            </div>
+
             <div class="ml-embedded" data-form="aDNlI7"></div>
-            <p class="fine muted">Unsubscribe anytime. Your email is never shared.</p>
+
+            <p class="fine muted signup-fine">Unsubscribe anytime. Your email is never shared.</p>
+
+            <noscript>
+              <p class="fine muted">Email signup requires JavaScript.</p>
+            </noscript>
+          </div>
+
+          <div class="trust-row" aria-label="Store availability">
+            <span class="trust-pill">Available on Amazon</span>
+            <span class="trust-pill">Available on Barnes and Noble</span>
+            <span class="trust-pill">Print extras in Print Shop</span>
           </div>
         </div>
 
@@ -79,6 +96,8 @@
               alt="Cover of Bound to Witness by Prince Hubbard"
               loading="eager"
               decoding="async"
+              width="1200"
+              height="1800"
             />
             <figcaption class="cover-caption">
               <span class="title">Bound to Witness</span>
@@ -86,7 +105,7 @@
             </figcaption>
           </figure>
 
-          <div class="hero-proof">
+          <div class="hero-proof" aria-label="Book snapshot">
             <div class="proof-item">
               <span class="proof-k">Format</span>
               <span class="proof-v">Paperback and eBook</span>
