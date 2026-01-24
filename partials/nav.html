@@ -1,29 +1,76 @@
-<div class="social-links">
-  <a
-    class="social-pill"
-    href="go/tiktok.html"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="TikTok @stamina4days (opens in a new tab)"
-  >
-    TikTok <span class="handle">@stamina4days</span>
-  </a>
+<!-- nav.html -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/index.html" aria-label="Home">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="brand-fallback">RI</span>
+        <img
+          src="/assets/residual-ink-badge.png"
+          alt=""
+          width="34"
+          height="34"
+          decoding="async"
+          onerror="this.style.display='none';"
+        />
+      </span>
+      <span class="brand-text">Residual Ink</span>
+    </a>
 
-  <a
-    class="social-pill"
-    href="go/instagram.html"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Instagram @prince_residual_ink (opens in a new tab)"
-  >
-    Instagram <span class="handle">@prince_residual_ink</span>
-  </a>
+    <nav class="nav" aria-label="Primary">
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-expanded="false"
+        aria-controls="navMenu"
+        type="button"
+      >
+        Menu
+      </button>
 
-  <a
-    class="social-pill"
-    href="/projects.html"
-    aria-label="Residual Ink Projects (opens the projects hub)"
-  >
-    Projects <span class="handle">Early Access</span>
-  </a>
+      <div class="nav-menu" id="navMenu">
+        <a href="/index.html" data-nav="home">Home</a>
+        <a href="/book.html" data-nav="book">Bound to Witness</a>
+        <a href="/ashes.html" data-nav="ashes">Ashes Don’t Lie</a>
+        <a href="/projects.html" data-nav="projects">Projects</a>
+        <a href="/press.html" data-nav="press">Press</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Sticky bottom social bar -->
+<div class="site-socialbar" role="navigation" aria-label="Social links">
+  <div class="container social-inner">
+    <div class="social-label">Follow</div>
+
+    <div class="social-links">
+      <a
+        class="social-pill"
+        href="go/tiktok.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="TikTok @stamina4days (opens in a new tab)"
+      >
+        TikTok <span class="handle">@stamina4days</span>
+      </a>
+
+      <a
+        class="social-pill"
+        href="go/instagram.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram @prince_residual_ink (opens in a new tab)"
+      >
+        Instagram <span class="handle">@prince_residual_ink</span>
+      </a>
+
+      <a
+        class="social-pill"
+        href="/projects.html"
+        aria-label="Residual Ink Projects (opens the projects hub)"
+      >
+        Projects <span class="handle">Early Access</span>
+      </a>
+    </div>
+  </div>
 </div>
