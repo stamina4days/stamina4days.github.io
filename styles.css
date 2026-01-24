@@ -336,6 +336,16 @@ h3{margin:0 0 10px}
   cursor:pointer;
 }
 
+/* Safety: never let a closed menu block taps */
+.nav-menu:not(.open){
+  pointer-events:auto;
+}
+@media (max-width:720px){
+  .nav-menu:not(.open){
+    pointer-events:none;
+  }
+}
+
 /* =========================
    HERO
 ========================= */
@@ -918,22 +928,43 @@ h1{
   :root{ --socialbar-h: 86px; }
 
   .nav-toggle{display:inline-flex}
+
+  .nav{
+    position:relative;
+  }
+
+  /* Mobile dropdown that never blocks taps when closed */
   .nav-menu{
-    display:none;
+    display:flex;
     position:absolute;
     right:0;
     top:calc(100% + 10px);
     flex-direction:column;
-    background:rgba(11,12,16,.92);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:16px;
-    padding:10px;
+
     min-width:220px;
+    padding:10px;
+    gap:6px;
+
+    background: rgba(10,10,12,0.96);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius:16px;
+    box-shadow: var(--shadowSoft);
+
+    opacity:0;
+    transform: translateY(-8px) scale(.98);
+    pointer-events:none;
     z-index:1200;
-    box-shadow:var(--shadowSoft);
+
+    transition: opacity .18s ease, transform .18s ease;
   }
+
   .nav-menu a{padding:10px 12px}
-  .nav-menu.open{display:flex}
+
+  .nav-menu.open{
+    opacity:1;
+    transform: translateY(0) scale(1);
+    pointer-events:auto;
+  }
 
   .social-inner{
     flex-direction:column;
