@@ -1,4 +1,15 @@
-<!-- partials/nav.html -->
+<!-- partials/nav.html (FULL REPLACEMENT) -->
+<style>
+  /* Mobile menu hard fix.
+     Forces the menu to be truly not-rendered unless open.
+     This prevents ghost text and prevents any invisible layer blocking taps. */
+  #navMenu { display: flex; }
+  @media (max-width: 720px){
+    #navMenu { display: none; }
+    #navMenu.open { display: flex; }
+  }
+</style>
+
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="/index.html" aria-label="Home">
@@ -46,7 +57,7 @@
     <div class="social-links">
       <a
         class="social-pill"
-        href="go/tiktok.html"
+        href="/go/tiktok.html"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -55,7 +66,7 @@
 
       <a
         class="social-pill"
-        href="go/instagram.html"
+        href="/go/instagram.html"
         target="_blank"
         rel="noopener noreferrer"
       >
