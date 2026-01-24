@@ -327,16 +327,18 @@ h3{margin:0 0 10px}
   background:rgba(255,255,255,.06);
 }
 
-#siteNav[data-active="home"]    .nav-menu a[data-nav="home"],
-#siteNav[data-active="book"]    .nav-menu a[data-nav="book"],
-#siteNav[data-active="ashes"]   .nav-menu a[data-nav="ashes"],
-#siteNav[data-active="about"]   .nav-menu a[data-nav="about"],
-#siteNav[data-active="press"]   .nav-menu a[data-nav="press"],
-#siteNav[data-active="contact"] .nav-menu a[data-nav="contact"]{
+#siteNav[data-active="home"]     .nav-menu a[data-nav="home"],
+#siteNav[data-active="book"]     .nav-menu a[data-nav="book"],
+#siteNav[data-active="ashes"]    .nav-menu a[data-nav="ashes"],
+#siteNav[data-active="about"]    .nav-menu a[data-nav="about"],
+#siteNav[data-active="press"]    .nav-menu a[data-nav="press"],
+#siteNav[data-active="contact"]  .nav-menu a[data-nav="contact"],
+#siteNav[data-active="projects"] .nav-menu a[data-nav="projects"]{
   color:var(--text);
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.12);
 }
+
 
 .nav-toggle{
   display:none;
