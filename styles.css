@@ -1051,3 +1051,31 @@ h1{
     transition:none;
   }
 }
+.ks-banner {
+  background: #0b2a4a;
+  color: white;
+  padding: 14px 18px;
+  text-align: center;
+}
+
+.ks-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+}
+
+.ks-btn {
+  background: #ffcc00;
+  color: #111;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ks-btn:hover {
+  opacity: 0.85;
+}
